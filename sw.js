@@ -43,7 +43,21 @@ self.addEventListener('activate', e => {
   )
 })
 
-self.addEventListener("fetch", event => {
+// self.addEventListener("fetch", event => {
+//   const request = event.request;
+//   if (!navigator.onLine && request.url.indexOf("index.html") === -1) {
+//     event.respondWith(
+//       caches.match(request).then(response => {
+//         if (response) {
+//           return response;
+//         }
+//         return caches.match("index-offline.html");
+//       })
+//     );
+//   }
+// });
+
+self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (!navigator.onLine && request.url.indexOf("index.html") === -1) {
     event.respondWith(
@@ -52,6 +66,14 @@ self.addEventListener("fetch", event => {
           return response;
         }
         return caches.match("index-offline.html");
+      })
+    );
+  }else{
+    event.respondWith(
+      caches.match(request).then(response => {
+        if (response) {
+          return response;
+        }
       })
     );
   }

@@ -4,19 +4,18 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.warn('Error al tratar de registrar el sw', err))
 }
 
-
 // document.getElementById("downloadProducts").addEventListener("click", function() {
-//   alert("Has hecho clic en el botón");
+//   //alert("Has hecho clic en el botón");
 
-//    // Verificar conexión a internet
-//    if (navigator.onLine) {
-//       console.log("Estás conectado a internet");
-//     } else {
-//       console.log("No estás conectado a internet");
+//   // Verificar conexión a internet
+//   if (navigator.onLine) {
+//     console.log("Estás conectado a internet");
+//   } else {
+//     console.log("No estás conectado a internet");
 
-//       // Enviar un mensaje al service worker para que muestre la página index-offline.html
-//       navigator.serviceWorker.controller.postMessage("showOfflinePage");
-//     }
+//     // Enviar un mensaje al service worker para que muestre la página index-offline.html
+//     navigator.serviceWorker.controller.postMessage("showOfflinePage");
+//   }
 // });
 
 // // Escuchar por un mensaje del service worker
@@ -47,6 +46,7 @@ document.getElementById("downloadProducts").addEventListener("click", function()
     .then(function(products) {
       // aquí puedes hacer algo con los productos que se han descargado
       console.log('products', products)
+      return caches.match("index.html");
     })
     .catch(function() {
       // Si la petición falla (por ejemplo, por falta de conexión a Internet),
@@ -77,8 +77,33 @@ document.getElementById("downloadProducts").addEventListener("click", function()
 // });
 
 
-navigator.serviceWorker.ready.then(function(registration) {
-  return registration.sync.register("myFirstSync");
-});
+// navigator.serviceWorker.ready.then(function(registration) {
+//   return registration.sync.register("myFirstSync");
+// });
+
+
+// // Detectar cambios de conexión
+// function isOnline() {
+//   if ( navigator.onLine ) {
+//     console.log('online')
+
+//     if (location.pathname !== '/index.html') {
+//       location.replace('./index.html');
+//     }
+
+//   } else{
+//       // No tenemos conexión
+//       console.log('offline')
+//       if (location.pathname !== '/index-offline.html') {
+//         location.replace('./index-offline.html');
+//       }
+//   }
+// }
+
+// window.addEventListener('online', isOnline );
+// window.addEventListener('offline', isOnline );
+
+// isOnline();
+
 
 

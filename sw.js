@@ -58,6 +58,7 @@ self.addEventListener('activate', e => {
 // });
 
 self.addEventListener("fetch", (event) => {
+  console.log()
   const request = event.request;
   if (!navigator.onLine && request.url.indexOf("index.html") === -1) {
     event.respondWith(
@@ -68,13 +69,56 @@ self.addEventListener("fetch", (event) => {
         return caches.match("index-offline.html");
       })
     );
-  }else{
-    event.respondWith(
-      caches.match(request).then(response => {
-        if (response) {
-          return response;
-        }
-      })
+  }
+  // else{
+  //   event.respondWith(
+  //     caches.match(request).then(response => {
+  //       if (response) {
+  //         return response;
+  //       }
+  //     })
+  //   );
+  // }
+});
+
+
+// self.addEventListener("message", function(event) {
+//   if (event.data === "executeAction") {
+//     console.log('Fer')
+//     // Ejecutar acción aquí
+//     // Por ejemplo, enviar un mensaje de nuevo al contexto de la página
+//     self.clients.matchAll().then(function(clients) {
+//       clients.forEach(function(client) {
+//         client.postMessage("actionExecuted");
+//       });
+//     });
+//   }
+// });
+
+self.addEventListener("message", e => {
+  if (e.data === "showOfflinePage") {
+    self.addEventListener("fetch", (event) => {
+      console.log()
+      const request = event.request;
+      if (!navigator.onLine && request.url.indexOf("index.html") === -1) {
+        event.respondWith(
+          caches.match(request).then(response => {
+            if (response) {
+              return response;
+            }
+            return caches.match("index-offline.html");
+          })
+        );
+      }
+    });
+  }
+})
+
+self.addEventListener("sync", function(event) {
+  if (event.tag === "myFirstSync") {
+    console.log('ahi va lo del internet')
+    event.waitUntil(
+      // Aquí puedes escribir el código que quieres que se ejecute una vez que se recupere la conexión
     );
   }
 });

@@ -34,39 +34,39 @@ if ('serviceWorker' in navigator) {
 //       navigator.serviceWorker.controller.postMessage("showOfflinePage");
 //     }
 // });
-document.getElementById("downloadProducts").addEventListener("click", function() {
+// document.getElementById("downloadProducts").addEventListener("click", function() {
 
-    fetch("https://dummyjson.com/products")
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then(function(products) {
-      // aquí puedes hacer algo con los productos que se han descargado
-      console.log('products', products)
-      return caches.match("index.html");
-    })
-    .catch(function() {
-      // Si la petición falla (por ejemplo, por falta de conexión a Internet),
-      // muestra el contenido que se guardó en cache en el Service Worker
-      return caches.match("index-offline.html");
-    })
-    .then(function(response) {
-      if (response) {
-        return response.text();
-      }
-    })
-    .then(function(html) {
-      document.open();
-      document.write(html);
-      document.close();
+//     fetch("https://dummyjson.com/products")
+//     .then(function(response) {
+//       if (!response.ok) {
+//         throw new Error("Network response was not ok");
+//       }
+//       return response.json();
+//     })
+//     .then(function(products) {
+//       // aquí puedes hacer algo con los productos que se han descargado
+//       console.log('products', products)
+//       return caches.match("index.html");
+//     })
+//     .catch(function() {
+//       // Si la petición falla (por ejemplo, por falta de conexión a Internet),
+//       // muestra el contenido que se guardó en cache en el Service Worker
+//       return caches.match("index-offline.html");
+//     })
+//     .then(function(response) {
+//       if (response) {
+//         return response.text();
+//       }
+//     })
+//     .then(function(html) {
+//       document.open();
+//       document.write(html);
+//       document.close();
 
 
-    });
-  }
-);
+//     });
+//   }
+// );
 
 
 // // Escuchar por un mensaje del service worker
@@ -82,28 +82,28 @@ document.getElementById("downloadProducts").addEventListener("click", function()
 // });
 
 
-// // Detectar cambios de conexión
-// function isOnline() {
-//   if ( navigator.onLine ) {
-//     console.log('online')
+// Detectar cambios de conexión
+function isOnline() {
+  if ( navigator.onLine ) {
+    console.log('online')
 
-//     if (location.pathname !== '/index.html') {
-//       location.replace('./index.html');
-//     }
+    if (location.pathname !== '/index.html') {
+      location.replace('./index.html');
+    }
 
-//   } else{
-//       // No tenemos conexión
-//       console.log('offline')
-//       if (location.pathname !== '/index-offline.html') {
-//         location.replace('./index-offline.html');
-//       }
-//   }
-// }
+  } else{
+      // No tenemos conexión
+      console.log('offline')
+      if (location.pathname !== '/index-offline.html') {
+        location.replace('./index-offline.html');
+      }
+  }
+}
 
-// window.addEventListener('online', isOnline );
-// window.addEventListener('offline', isOnline );
+window.addEventListener('online', isOnline );
+window.addEventListener('offline', isOnline );
 
-// isOnline();
+isOnline();
 
 
 
